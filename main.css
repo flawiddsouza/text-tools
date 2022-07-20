@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+html, body, main {
+    height: 100%;
+}
+
+main {
+    display: grid;
+    grid-auto-rows: auto 1fr;
+    padding: 1rem;
+}
