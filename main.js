@@ -1,19 +1,26 @@
 import converters from './converters.js'
+import samples from './samples.js'
 import { saveAndLoad } from './helpers.js'
 
 const id = document.getElementById.bind(document)
 
 const converter = id('converter')
-const convert = id('convert')
 const input = id('input')
 const output = id('output')
 
-saveAndLoad(input, 'TextTools-Input')
+// Load Sample Data for Each Converter
+converter.addEventListener('change', () => {
+    converter.value = samples[converter.value]
+})
 
-convert.addEventListener('click', () => {
+function convert() {
     if(converter.value in converters) {
         output.value = converters[converter.value](input.value)
     } else {
         output.value = 'Not Implemented'
     }
-})
+}
+
+input.addEventListener('input', convert)
+
+saveAndLoad(input, `TextTools-Input-${converter.value}`, samples[converter.value], convert)

@@ -1,9 +1,14 @@
-export function saveAndLoad(inputElement, localStorageKey) {
+export function saveAndLoad(inputElement, localStorageKey, initialValue, callback=null) {
     inputElement.addEventListener('input', () => {
         localStorage.setItem(localStorageKey, inputElement.value)
     })
 
-    inputElement.value = localStorage.getItem(localStorageKey)
+    const storedValue = localStorage.getItem(localStorageKey)
+    inputElement.value = storedValue !== null && storedValue !== '' ? storedValue : initialValue
+
+    if(callback) {
+        callback()
+    }
 }
 
 export function wrapText(text, cutoffLength) {
