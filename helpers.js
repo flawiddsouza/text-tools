@@ -11,14 +11,17 @@ export function wrapText(text, cutoffLength) {
 }
 
 export function drawTable(rows, { cutoffLength }) {
-    let maxLineLength = 0
+    let maxLineLength = {}
 
     rows.forEach(cells => {
-        cells.forEach(cell => {
+        cells.forEach((cell, cellIndex) => {
+            if(cellIndex in maxLineLength === false) {
+                maxLineLength[cellIndex] = 0
+            }
             const lines = wrapText(cell, cutoffLength).split('\n')
             lines.forEach(line => {
-                if(line.length > maxLineLength) {
-                    maxLineLength = line.length
+                if(line.length > maxLineLength[cellIndex]) {
+                    maxLineLength[cellIndex] = line.length
                 }
             })
         })
@@ -46,7 +49,7 @@ export function drawTableRow(cells, { cutoffLength, maxLineLength, drawTop = tru
 
     // top
     if(drawTop) {
-        const repeat = (maxLineLength * cells.length) + 7
+        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + 7
         boxes += '-'.repeat(repeat)
         boxes += '\n'
     }
@@ -59,10 +62,10 @@ export function drawTableRow(cells, { cutoffLength, maxLineLength, drawTop = tru
             const lines = wrapText(cell, cutoffLength).split('\n')
             if(line in lines) {
                 const currentLine = lines[line]
-                const emptySpaces = currentLine.length < maxLineLength ? ' '.repeat(maxLineLength - currentLine.length) : ''
+                const emptySpaces = currentLine.length < maxLineLength[cellIndex] ? ' '.repeat(maxLineLength[cellIndex] - currentLine.length) : ''
                 boxes += `${start}${currentLine}${emptySpaces}${end}`
             } else {
-                boxes += `${start}${' '.repeat(maxLineLength)}${end}`
+                boxes += `${start}${' '.repeat(maxLineLength[cellIndex])}${end}`
             }
         })
         boxes += '\n'
@@ -70,7 +73,7 @@ export function drawTableRow(cells, { cutoffLength, maxLineLength, drawTop = tru
 
     // bottom
     if(drawBottom) {
-        const repeat = (maxLineLength * cells.length) + 7
+        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + 7
         boxes += '-'.repeat(repeat)
         boxes += '\n'
     }
