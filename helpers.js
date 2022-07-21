@@ -54,7 +54,7 @@ export function drawTableRow(cells, { cutoffLength, maxLineLength, drawTop = tru
 
     // top
     if(drawTop) {
-        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + 7
+        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + (3 * cells.length) + 1
         boxes += '-'.repeat(repeat)
         boxes += '\n'
     }
@@ -78,7 +78,7 @@ export function drawTableRow(cells, { cutoffLength, maxLineLength, drawTop = tru
 
     // bottom
     if(drawBottom) {
-        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + 7
+        const repeat = cells.map((_, cellIndex) => maxLineLength[cellIndex]).reduce((prev, curr) => prev + curr, 0) + (3 * cells.length) + 1
         boxes += '-'.repeat(repeat)
         boxes += '\n'
     }
