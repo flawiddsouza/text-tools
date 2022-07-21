@@ -1,6 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "start": "npx serve"
+        "start": "serve -p 5000"
+    },
+    "devDependencies": {
+        "serve": "^14.0.1"
     }
 }
