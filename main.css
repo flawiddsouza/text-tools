@@ -16,3 +16,7 @@ main {
     grid-auto-rows: auto 1fr;
     padding: 1rem;
 }
+
+textarea {
+    resize: none;
+}

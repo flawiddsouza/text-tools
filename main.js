@@ -1,26 +1,15 @@
-import converters from './converters.js'
-import samples from './samples.js'
-import { saveAndLoad } from './helpers.js'
+const converter = document.getElementById('converter')
+const customElementHolder = document.getElementById('custom-element-holder')
 
-const id = document.getElementById.bind(document)
-
-const converter = id('converter')
-const input = id('input')
-const output = id('output')
-
-// Load Sample Data for Each Converter
-converter.addEventListener('change', () => {
-    converter.value = samples[converter.value]
-})
-
-function convert() {
-    if(converter.value in converters) {
-        output.value = converters[converter.value](input.value)
-    } else {
-        output.value = 'Not Implemented'
+function loadConverter() {
+    if(converter.value === 'HTML Table to Unicode Table') {
+        customElementHolder.innerHTML = ''
+        customElementHolder.appendChild(document.createElement('html-table-to-unicode-table'))
     }
 }
 
-input.addEventListener('input', convert)
+converter.addEventListener('change', () => {
+    loadConverter()
+})
 
-saveAndLoad(input, `TextTools-Input-${converter.value}`, samples[converter.value], convert)
+loadConverter()
